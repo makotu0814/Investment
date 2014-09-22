@@ -11,8 +11,8 @@ public class Result {
     private double maxLost = 0;
     private int entryCount  = 0;
     private int chainLost = 0;
-    private List<Boolean> winOrlost  = new ArrayList<Boolean>(); 
-    private List<Double> lostMoney = new ArrayList<Double>();
+    private List<Boolean> winOrlost  = new ArrayList<Boolean>();
+    private boolean endTrade = false;
 
     public double getBalance() {
         return balance;
@@ -74,10 +74,10 @@ public class Result {
     public void setMaxLost(double maxLost) {
         this.maxLost = maxLost;
     }
-    public List<Double> getLostMoney() {
-        return lostMoney;
+    public boolean isEndTrade() {
+        return endTrade;
     }
-    public void setLostMoney(List<Double> lostMoney) {
-        this.lostMoney = lostMoney;
+    public void setEndTrade(boolean endTrade) {
+        this.endTrade = endTrade;
     }
 }

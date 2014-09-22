@@ -13,12 +13,15 @@ public class Main {
      */
     public static void main(String[] args) {
         InputData input = new InputData();
-        input.setBalance(100000);
-        input.setNeedProhit(1300);
+        input.setBalance(50000);
+        input.setNeedProhit(700);
         input.setPayoutRate(1.8);
-        input.setPayUnit(1800);
+        input.setPayUnit(1000);
         input.setProhit(0);
         input.setWinProb(60);
+        //input.setMaxEntry(10);
+        //input.setLostCut(6000);
+        //input.setMaxLostChain(5);
 
         try {
             int sumEntry = 0;
@@ -30,12 +33,13 @@ public class Main {
             int longEntry = 0;
             double minBalance = 999999999;
             double maxLost = 0;
+            double sumProhit = 0;
 
             for (int i = 0; i < months; i++) {
                 System.out.println("--------------------------------------------------" + (i + 1) + "ƒJŒŽ–Ú------------------------------------------------");
                 for (int j = 0; j < days; j++) {
 
-                    InvestMethod method = new Winners();
+                    InvestMethod method = new Normal();
                     Result result = method.invest(input);
 
                     if (result.getBalance() <= 0) {
@@ -63,31 +67,39 @@ public class Main {
                     maxLost = Math.min(result.getMaxLost(), maxLost);
 
                     System.out.println("-----------------" + (j + 1) + "“ú–Ú-----------------");
+                    if (result.isEndTrade()) {
+                        System.out.println("—\‘zˆÈã‚É•‰‚¯‚½‚Ì‚Å‘¹Ø‚µ‚½");
+                    }
+
                     System.out.println("—˜‰v : " + result.getProhit());
                     System.out.println("ŒûÀ: " + result.getBalance());
                     System.out.println("ƒGƒ“ƒgƒŠ[‰ñ”:" + result.getEntryCount());
                     System.out.println("Œ¸‚Á‚½Žž‚ÌŒûÀ : " + result.getMinBalance());
                     System.out.println("Å‘å‚Ì‘¹Ž¸ : " + result.getMaxLost());
+                    System.out.println("Å‘å‚Ì˜A”s : " + result.getChainLost());
                     System.out.println("---------------------------------------");
 
                     sumEntry += result.getEntryCount();
+
+                    sumProhit += result.getProhit();
 
                     input.setBalance(result.getBalance());
                 }
                 System.out.println("---------------------------------------------------------------------------------------------------------");
             }
+            System.out.println("ŒûÀ : " + input.getBalance());
+            System.out.println("1‚©ŒŽ‚Ì•½‹Ï—˜‰v : " + sumProhit / (months));
             System.out.println("Å‘åŽæˆø‰ñ” : " + maxEntry);
             System.out.println("Å­Žæˆø‰ñ” : " + minEntry);
             System.out.println("•½‹ÏŽæˆø‰ñ” : " + sumEntry / (days * months));
             System.out.println("Å‘å˜A”s‹L˜^ : "+ maxchainLost);
-            //System.out.println("Å‘å‚ÅŒ¸‚Á‚½‚Æ‚«‚ÌŒûÀ : " + minBalance);
             System.out.println("Å‘å‚Ì‘¹Ž¸  : " + maxLost);
             System.out.println("’ZŽæˆø‰ñ” : " + shortEntry);
             System.out.println(Consts.shortEntry + "‰ñˆÈ“à‚ÅI‚í‚éŠm—¦:" + (int)((double)shortEntry / (days * months) * 100) + "%");
             System.out.println(Consts.shortEntry + "‰ñ‚æ‚è‘½‚­" + Consts.longEntry + "‰ñˆÈ“à‚ÅI‚í‚éŠm—¦" + (int)((double)middleEntry / (days * months) * 100) + "%");
             System.out.println("‚»‚ê‚æ‚è‚à‘½‚­Žæˆø‚·‚é‰ñ” :"+ (int)((double)longEntry / (days * months) * 100) + "%");
 
-        } catch (Exception e) {
+        } catch (InvestException e) {
             System.out.println(e.toString());
         }
     }

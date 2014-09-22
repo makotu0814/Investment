@@ -8,6 +8,9 @@ public class InputData {
     private double prohit = 0;
     private double winProb = 0;
     private double needProhit = 0;
+    private double lostCut = 99999999;
+    private double maxEntry = 9999;
+    private double maxLostChain = 9999999;
 
     public double getBalance() {
         return balance;
@@ -44,6 +47,24 @@ public class InputData {
     }
     public void setNeedProhit(double needProhit) {
         this.needProhit = needProhit;
+    }
+    public double getLostCut() {
+        return lostCut;
+    }
+    public void setLostCut(double lostCut) {
+        this.lostCut = lostCut;
+    }
+    public double getMaxEntry() {
+        return maxEntry;
+    }
+    public void setMaxEntry(double maxEntry) {
+        this.maxEntry = maxEntry;
+    }
+    public double getMaxLostChain() {
+        return maxLostChain;
+    }
+    public void setMaxLostChain(double maxLostChain) {
+        this.maxLostChain = maxLostChain;
     }
 
 

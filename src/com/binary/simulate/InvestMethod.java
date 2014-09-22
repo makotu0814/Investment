@@ -3,7 +3,7 @@ package com.binary.simulate;
 public abstract class InvestMethod {
 
     public Result invest(InputData input) {
-    
+
         Result result = new Result();
         result.setBalance(input.getBalance());
         result.setMinBalance(999999999);
@@ -12,6 +12,11 @@ public abstract class InvestMethod {
         int chainLost  = 0;
         while (result.getBalance() > 0
                 && input.getNeedProhit() >= result.getProhit()) {
+
+            if (EndTrade(result, input)) {
+                result.setEndTrade(true);
+                break;
+            }
 
             double pay = getPayMoney(input, result);
             if (result.getBalance() < pay) {
@@ -44,6 +49,15 @@ public abstract class InvestMethod {
         }
 
         return result;
+    }
+
+    protected boolean EndTrade(Result result, InputData input) {
+
+        boolean isMaxEntry = result.getEntryCount() >= input.getMaxEntry();
+        boolean isMaxChainLost = result.getChainLost() >= input.getMaxLostChain();
+        boolean isLostCut = result.getMaxLost() <= -input.getLostCut();
+
+        return isMaxEntry || isMaxChainLost || isLostCut;
     }
 
     protected abstract void win(double pay, Result result);
