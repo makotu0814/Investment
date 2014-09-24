@@ -20,7 +20,9 @@ public abstract class InvestMethod {
 
             double pay = getPayMoney(input, result);
             if (result.getBalance() < pay) {
+                System.out.println(pay + "•¥‚¢‚½‚¢‚¯‚Ç‚¨‹à‚ª‘«‚è‚È‚¢");
                 pay = result.getBalance();
+                System.out.println("—L‚è‹à‚ð‘S‚Ä‚Â‚¬ž‚Þ :" + pay);
             }
             result.setBalance(result.getBalance() - pay);
             result.setMinBalance(Math.min(result.getMinBalance(), result.getBalance()));

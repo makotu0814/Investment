@@ -5,8 +5,8 @@ package com.binary.simulate;
 
 public class Main {
 
-    private static final int days = 20;
-    private static final int months = 12;
+    private static final int days = 1;
+    private static final int months = 1;
 
     /**
      * @param args
@@ -14,14 +14,14 @@ public class Main {
     public static void main(String[] args) {
         InputData input = new InputData();
         input.setBalance(50000);
-        input.setNeedProhit(700);
+        input.setNeedProhit(1300);
         input.setPayoutRate(1.8);
-        input.setPayUnit(1000);
+        input.setPayUnit(1800);
         input.setProhit(0);
         input.setWinProb(60);
         //input.setMaxEntry(10);
         //input.setLostCut(6000);
-        //input.setMaxLostChain(5);
+        //input.setMaxLostChain(7);
 
         try {
             int sumEntry = 0;
@@ -39,12 +39,14 @@ public class Main {
                 System.out.println("--------------------------------------------------" + (i + 1) + "ƒJŒŽ–Ú------------------------------------------------");
                 for (int j = 0; j < days; j++) {
 
-                    InvestMethod method = new Normal();
+                    InvestMethod method = new Martingale();
                     Result result = method.invest(input);
 
                     if (result.getBalance() <= 0) {
                         System.out.println((i + 1) + "ƒJŒŽ–Ú" + (j + 1) + "“ú–Ú" + result.getEntryCount() + "‰ñ–Ú‚Å‘Þê");
                         System.out.println("Žæˆø‰ñ” : " + result.getEntryCount());
+                        System.out.println("—˜‰v : " + result.getProhit());
+                        System.out.println("˜A”s‹L˜^ : " + result.getChainLost());
                         throw new InvestException("Ž‘‹à‚ª’ê‚ð‚Â‚«‚½");
                     }
 
